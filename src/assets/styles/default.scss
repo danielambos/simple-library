@@ -1,0 +1,41 @@
+@import 'fonts';
+@import 'variables';
+@import 'reset';
+
+html {
+	font-size: 10px;
+	font-family: var(--base-font), sans-serif;
+}
+
+body {
+	background: var(--gray);
+}
+
+.full {
+	width: 100%;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	&.top {
+		justify-content: flex-start;
+	}
+
+	&.left {
+		align-items: flex-start;
+	}
+}
+
+.limit-grid {
+	width: 100%;
+	padding: 0 1.5rem;
+
+	@media (min-width: 992px) {
+		max-width: 940px;
+		margin-left: auto;
+		margin-right: auto;
+		padding: 0 2rem;
+	}
+}

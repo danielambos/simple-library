@@ -1,0 +1,38 @@
+.button-content {
+    width: 100%;
+    padding: 0 0 2rem 0;
+
+    &__button {
+        height: 4.8rem;
+        width: 100%;
+        font-size: 1.6rem;
+        font-weight: bold;
+        border-radius: 0.4rem;
+        cursor: pointer;
+
+        &--primary {
+            border: none;
+            outline: none;
+            background-color: var(--blue-medium);
+            color: var(--white);
+
+            &:hover {
+                background-color: var(--blue-dark);
+            }
+
+            &:active,
+            &:disabled {
+                opacity: 0.8;
+                background-color: var(--blue-medium);
+            }
+        }
+
+        &--light {
+            background-color: var(--blue-light);
+        }
+
+        svg {
+            margin-top: 0.5rem;
+        }
+    }
+}
