@@ -21,7 +21,7 @@ const Button = (props) => {
             style={containerStyle}
         >
             <button
-                className={'button-content__button button-content__button--primary ' + (styleType === 'light' && 'button-content__button--light')}
+                className={'button-content__button button-content__button--primary ' + (styleType === 'small' && 'button-content__button--small')}
                 style={buttonStyle}
                 type={type}
                 onClick={onClick}

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import Swal from 'sweetalert2'
 
 import { Creators } from '../../store/ducks/user'
+
 import Input from '../../components/Input'
 import Button from '../../components/Button'
 import logo from '../../assets/images/logo.svg'
@@ -33,7 +34,6 @@ class Intro extends Component {
 				Swal.fire({
 					title: 'Error!',
 					text: this.props.error,
-					type: 'error',
 					confirmButtonText: 'OK'
 				})
 			}
@@ -41,7 +41,6 @@ class Intro extends Component {
 			Swal.fire({
 				title: 'Error!',
 				text: 'Please enter your name to continue.',
-				type: 'error',
 				confirmButtonText: 'OK'
 			})
 		}

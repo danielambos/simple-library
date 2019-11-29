@@ -1,4 +1,10 @@
 .search {
+	padding: 5rem 0  7.5rem;
+
+	@media (min-width: 992px) {
+		padding: 8rem 0 0;
+	}
+
 	&__button-icon {
 		width: 2rem;
 		height: 2rem;

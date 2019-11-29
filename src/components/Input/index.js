@@ -21,11 +21,12 @@ class Input extends Component {
     render() {
         const {
             id,
-            label,
             name,
             type,
             placeholder,
             value,
+            leftIcon,
+            rightIcon,
             invalid,
             invalidMessage,
             containerStyle
@@ -38,15 +39,10 @@ class Input extends Component {
                 className={'input-content' + (invalid === true ? ' input-content--invalid' : '')}
                 style={containerStyle}
             >
-                {label && 
-                    <label
-                        className={'input-content__label'}
-                        htmlFor={id}
-                    >
-                        {label}
-                    </label>
-                }
                 <div className={'input-content__wrapper'}>
+                    {leftIcon &&
+                        leftIcon
+                    }
                     <input
                         className={'input-content__input'}
                         id={id}
@@ -57,6 +53,9 @@ class Input extends Component {
                         onChange={this.handleInputChange}
                         {...required}
                     />
+                    {rightIcon &&
+                        rightIcon
+                    }
                 </div>
                 {invalid &&
                     <span className={'input-content__error-message'}>

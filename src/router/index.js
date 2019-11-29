@@ -17,7 +17,7 @@ export default () => (
 			<PrivateRoute component={Library} path={'/library'} exact />
 			<PrivateRoute component={Search} path={'/search'} exact />
 			<PrivateRoute component={Report} path={'/report'} exact />
-			<PrivateRoute component={Details} path={'/library/:bookId'} />
+			<PrivateRoute component={Details} path={'/book/:bookId'} />
 		</Switch>
 	</BrowserRouter>
 )

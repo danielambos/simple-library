@@ -1,0 +1,26 @@
+.report-list {
+	margin-bottom: 4rem;
+
+	&__year {
+		padding: 1rem 0;
+		font-size: 1.8rem;
+		font-weight: bold;
+		color: var(--blue);
+	}
+
+	&__title {
+		padding: 1rem 0;
+		border-bottom: var(--gray-dark) 1px dotted;
+		font-size: 1.6rem;
+		font-weight: bold;
+		color: var(--gray-dark);
+	}
+
+	&__item {
+		line-height: 2rem;
+		margin: 1rem 2rem;
+		font-size: 1.4rem;
+		color: var(--gray-dark);
+		list-style: circle;
+	}
+}

@@ -1,0 +1,47 @@
+.search-list-item {
+    padding: 1rem 0;
+    border-top: var(--gray-dark) 1px dotted;
+    display: flex;
+
+    @media (min-width: 992px) {
+        width: 50%;
+        border: 0;
+        padding: 2rem 0;
+        display: inline-flex;
+        vertical-align: top;
+
+        &:nth-child(2) {
+            padding-top: 0;
+            border: 0;
+        }
+    }
+
+    &:first-child {
+        padding-top: 0;
+        border: 0;
+    }
+
+    &__left {
+        margin-right: 2rem;
+    }
+
+    &__image {
+        width: 12rem;
+    }
+
+    &__right {
+        @media (min-width: 992px) {
+            margin-right: 2rem;
+        }
+
+        p {
+            line-height: 2rem;
+            font-size: 1.4rem;
+            color: var(--gray-dark);
+
+            b {
+                font-weight: bold;
+            }
+        }
+    }
+}

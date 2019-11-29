@@ -3,11 +3,13 @@
     padding: 0 0 2rem 0;
 
     &__button {
-        height: 4.8rem;
+        height: 5rem;
         width: 100%;
         font-size: 1.6rem;
         font-weight: bold;
-        border-radius: 0.4rem;
+        border-radius: 0.2rem;
+        -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
         cursor: pointer;
 
         &--primary {
@@ -20,15 +22,27 @@
                 background-color: var(--blue-dark);
             }
 
-            &:active,
+            &:active {
+                -webkit-box-shadow: none;
+                box-shadow: none;
+            }
+
             &:disabled {
                 opacity: 0.8;
-                background-color: var(--blue-medium);
+                -webkit-box-shadow: none;
+                box-shadow: none;
             }
         }
 
-        &--light {
-            background-color: var(--blue-light);
+        &--small {
+            width: auto;
+            height: 3rem;
+            line-height: 3rem;
+            padding: 0 2rem;
+            font-size: 1.4rem;
+            font-weight: normal;
+            -webkit-box-shadow: none;
+            box-shadow: none;
         }
 
         svg {

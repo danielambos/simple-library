@@ -1,0 +1,44 @@
+.select-content {
+    $input: &;
+
+    width: 100%;
+    padding: 0 0 2rem 0;
+
+    &__label {
+        font-size: 1.4rem;
+        color: var(--gray-dark);
+        margin-right: 1rem;
+    }
+
+    &__select {
+        height: 100%;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background: transparent;
+        background-image: url(../../assets/images/down-arrow.svg);
+        background-size: 1.4rem;
+        background-repeat: no-repeat;
+        background-position: center right;
+        border: none;
+        outline: none;
+        padding-right: 2rem;
+        color: var(--gray-dark);
+        font-size: 1.4rem;
+        cursor: pointer;
+    }
+
+    &__error-message {
+        font-size: 1.08rem;
+        color: var(--danger);
+    }
+
+    &--invalid {
+        #{$input}__label {
+            color: var(--danger);
+        }
+
+        #{$input}__wrapper {
+            border-color: var(--danger);
+        }
+    }
+}

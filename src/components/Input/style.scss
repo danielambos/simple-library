@@ -10,23 +10,30 @@
     }
 
     &__wrapper {
+        height: 5rem;
         margin: 0.5rem 0 0.3rem 0;
+        padding: 0.5rem 1rem;
+        border-radius: 0.2rem;
+        -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+        background: var(--white);
         display: flex;
         flex-direction: row;
-        height: 4.8rem;
-        border: 0.05rem solid var(--blue-light);
-        border-radius: 0.4rem;
-        padding: 0.3rem 1rem 0.1rem 1rem;
-        background: var(--white);
         align-items: center;
         justify-content: center;
+
+        @media (min-width: 992px) {
+            padding: 0.5rem 2rem;
+        }
     }
 
     &__input {
-        font-family: 'OpenSans', sans-serif;
         border: none;
         outline: none;
         font-size: 1.6rem;
+        font-family: var(--base-font);
+        font-weight: 400;
+        font-style: italic;
         color: var(--gray-dark);
         width: 100%;
         height: 100%;

@@ -1,3 +1,50 @@
 .details {
-	display: block;
+	padding: 5rem 0  7.5rem;
+
+	@media (min-width: 992px) {
+		padding: 8rem 0 0;
+	}
+
+	&__container {
+		padding-bottom: 5rem;
+
+		@media (min-width: 992px) {
+			display: flex;
+		}
+	}
+
+	&__left {
+		width: 18rem;
+		margin: 0 auto 4rem;
+
+		@media (min-width: 992px) {
+			margin-right: 2rem;
+		}
+	}
+
+	&__image {
+		width: 18rem;
+		margin-bottom: 2rem;
+	}
+
+	&__readed {
+		line-height: 2.2rem;
+		font-size: 1.6rem;
+		font-weight: bold;
+		color: var(--blue);
+		text-align: center;
+	}
+
+	&__right {
+		p {
+			line-height: 2.5rem;
+			font-size: 1.6rem;
+			color: var(--gray-dark);
+			word-wrap: break-word;
+
+			b {
+				font-weight: bold;
+			}
+		}
+	}
 }

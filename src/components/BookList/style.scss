@@ -1,0 +1,15 @@
+.book-list {
+    &__empty {
+		width: 30rem;
+		margin: 5rem auto;
+		text-align: center;
+
+		&__text {
+			line-height: 2.2rem;
+			margin-bottom: 2rem;
+			font-size: 1.6rem;
+			color: var(--gray-dark);
+			text-align: center;
+		}
+	}
+}
