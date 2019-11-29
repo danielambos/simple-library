@@ -25,7 +25,7 @@ export default class OpenLibraryApi {
 
 	async search(type, text, page) {
 		try {
-			let request = await fetch(`http://openlibrary.org/search.json?${type}=${text}&page=${page}`, {
+			let request = await fetch(`https://openlibrary.org/search.json?${type}=${text}&page=${page}`, {
 				method: 'GET'
 			})
 

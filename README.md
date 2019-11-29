@@ -32,3 +32,7 @@ Here are the commands that are used in the project:
 Before running git commit, the rules of ESLint and Stylelint are executed. If
 there is an error or some non-default code of the site will generate an error
 and you will not be able to commit.
+
+## Dev/Homolog
+
+[https://pedantic-bose-ec7e0f.netlify.com/](https://pedantic-bose-ec7e0f.netlify.com/)

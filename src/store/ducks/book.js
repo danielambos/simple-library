@@ -6,7 +6,7 @@ export const { Types, Creators } = createActions({
 	addBook: (book) => async dispatch => {
 		try {
 			let books = localStorage.getItem('books'),
-			items = books ? JSON.parse(books) : []
+				items = books ? JSON.parse(books) : []
 
 			if(items.length) {
 				let index = items.findIndex(x => x.id === book.id)
@@ -17,18 +17,23 @@ export const { Types, Creators } = createActions({
 						text: 'You already added this Book.',
 						confirmButtonText: 'OK'
 					})
+
+					return {
+						type: 'ADD_BOOK',
+					}
 				}
-			} else {
-				items.push(book)
-
-				localStorage.setItem('books', JSON.stringify(items))
-
-				Swal.fire({
-					title: 'Success!',
-					text: 'You successfully added the book.',
-					confirmButtonText: 'OK'
-				})
 			}
+
+			items.push(book)
+
+			localStorage.setItem('books', JSON.stringify(items))
+
+			Swal.fire({
+				title: 'Success!',
+				text: 'You successfully added the book.',
+				confirmButtonText: 'OK'
+			})
+
 		} catch (error) {
 			Swal.fire({
 				title: 'Error!',
@@ -58,6 +63,7 @@ export const { Types, Creators } = createActions({
 			response.index = index
 			response.read = book ? book.read : false
 			response.details = details[`OLID:${id}`].details
+			response.localStorage = items[index]
 
 			if ( Object.keys(response).length !== 0) {
 				dispatch(Creators.loadBookSuccess(response))
@@ -77,25 +83,20 @@ export const { Types, Creators } = createActions({
 	loadBookSuccess: ['book'],
 	loadBookFailure: ['error'],
 	loadingBook: ['active'],
-	markAsRead: () => async (dispatch, getState) => {
+	markAsRead: () => (dispatch, getState) => {
 		let book = getState().book.book
-
-		try {
 			book.read = true;
 
-			let books = JSON.parse(localStorage.getItem('books'))			
+		let books = JSON.parse(localStorage.getItem('books'))			
 
-			books[book.index] = book
+		books[book.index]["read"] = book.read
 
-			localStorage.setItem('books', JSON.stringify(books))
-		} catch (error) {
-			dispatch(Creators.loadBookFailure("Sorry, an unexpected error has occurred!"))
-		}
+		localStorage.setItem('books', JSON.stringify(books))
 
-		return {
+		dispatch({
 			type: 'MARK_AS_READ',
 			book: book
-		}
+		})
 	},
 	searchBooks: (type, filter, page, qt) => async (dispatch, getState) => {
 		try {
@@ -132,7 +133,32 @@ export const { Types, Creators } = createActions({
 	changeQuantityPerPage: ['qt'],
 	checkSearchSubmission: (state) => (dispatch) => {
         dispatch({ type: 'CHECK_SEARCH_SUBMISSION', active: state });
-    }
+	},
+	saveBookToReport: (date) => async (dispatch, getState) => {
+		let book = getState().book.book
+
+		let readDate = date.split('-'),
+			day = readDate[2],
+			month = readDate[1],
+			year = readDate[0]
+
+		let report = localStorage.getItem('report'),
+			years = report ? JSON.parse(report) : {}
+
+		if(!(year in years)) {
+			let newYear = [[],[],[],[],[],[],[],[],[],[],[],[]]
+
+			years[year] = newYear
+		}
+
+		years[year][month-1].push({id: book.id, title: book.title, cover: book.cover, day: day, month: month, year: year})
+
+		localStorage.setItem('report', JSON.stringify(years))
+
+		return {
+			type: 'SAVE_BOOK_TO_REPORT'
+		}
+	}
 })
 
 const INITIAL_STATE = {
@@ -146,6 +172,7 @@ const INITIAL_STATE = {
 	page: 0,
 	qt: 100,
 	checkSearchSubmission: false,
+	read: false,
 	error: null
 }
 
@@ -160,7 +187,8 @@ const loadBook = (state = INITIAL_STATE, action) => {
 const loadBookSuccess = (state = INITIAL_STATE, action) => {
 	return {
 		...state,
-		book: action.book
+		book: action.book,
+		read: action.book.read
 	}
 }
 
@@ -181,7 +209,8 @@ const loadingBook = (state = INITIAL_STATE, action) => {
 const markAsRead = (state = INITIAL_STATE, action) => {
 	return {
 		...state,
-		book: action.book
+		book: action.book,
+		read: action.book.read
 	}
 }
 
@@ -227,6 +256,10 @@ const checkSearchSubmission = (state = INITIAL_STATE, action) => {
 	}
 }
 
+const saveBookToReport = (state = INITIAL_STATE, action) => {
+	return INITIAL_STATE
+}
+
 export default createReducer(INITIAL_STATE, {
 	[Types.ADD_BOOK]: addBook,
 	[Types.LOAD_BOOK]: loadBook,
@@ -239,5 +272,6 @@ export default createReducer(INITIAL_STATE, {
 	[Types.SEARCH_BOOKS_FAILURE]: searchBookError,
 	[Types.LOADING_SEARCH_BOOKS]: loadingSearchBooks,
 	[Types.CHANGE_QUANTITY_PER_PAGE]: changeQuantityPerPage,
-	[Types.CHECK_SEARCH_SUBMISSION]: checkSearchSubmission
+	[Types.CHECK_SEARCH_SUBMISSION]: checkSearchSubmission,
+	[Types.SAVE_BOOK_TO_REPORT]: saveBookToReport
 })

@@ -19,6 +19,9 @@ class Details extends Component {
 		this.state = {
 			id: this.props.match.params.bookId
 		}
+
+		this.handleRead = this.handleRead.bind(this)
+		this.handleReport = this.handleReport.bind(this)
 	}
 
 	componentDidMount() {
@@ -57,31 +60,7 @@ class Details extends Component {
 	}
 
 	handleReport = async(date) => {
-		const {
-			id
-		} = this.state
-
-		const {
-			book
-		} = this.props
-
-		let readDate = date.split('-'),
-			day = readDate[2],
-			month = readDate[1],
-			year = readDate[0]
-
-		let report = localStorage.getItem('report'),
-			years = report ? JSON.parse(report) : {}
-
-		if(!(year in years)) {
-			let newYear = [[],[],[],[],[],[],[],[],[],[],[],[]]
-
-			years[year] = newYear
-		}
-
-		years[year][month-1].push({id: id, title: book.title, cover: book.cover, day: day, month: month, year: year})
-
-		localStorage.setItem('report', JSON.stringify(years))
+		this.props.onSaveBookToReport(date)
 	}
 
 	render() {
@@ -96,7 +75,7 @@ class Details extends Component {
 						<div className={'details__container'}>
 							<div className={'details__left'}>
 								<img className={'details__image'} src={this.props.book.cover.medium || image} alt={this.props.book.title} />
-								{this.props.book.read ?
+								{this.props.read ?
 									<p className={'details__readed'}>You already marked as read this book</p>
 									:
 									<Button
@@ -191,7 +170,8 @@ class Details extends Component {
 
 export default connect(
     state => ({
-        book: state.book.book
+		book: state.book.book,
+		read: state.book.read
     }),
     dispatch => ({
         onLoadBook: (id) => {
@@ -200,5 +180,8 @@ export default connect(
 		onMarkAsRead: () => {
 			dispatch(Creators.markAsRead())
 		},
+		onSaveBookToReport: (date) => {
+			dispatch(Creators.saveBookToReport(date))
+		}
     })
 )(Details)
