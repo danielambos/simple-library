@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Creators } from '../../store/ducks/book'
 
 import Header from '../../components/Header'
 import Navbar from '../../components/Navbar'
@@ -12,8 +14,6 @@ class Report extends Component {
 		super(props)
 
 		this.state = {
-			report: {},
-			options: [],
 			year: new Date().getFullYear()
 		}
 
@@ -21,33 +21,16 @@ class Report extends Component {
 	}
 
 	componentDidMount() {
-		this.loadReport()
+		this.props.onLoadReport()
 	}
 
 	setValue(name, value) {
 		this.setState({[name]: value})
 	}
 
-	loadReport = async() => {
-		let report = localStorage.getItem('report'),
-			years = report ? JSON.parse(report) : {},
-			options = []
-
-		for (let prop in years) {
-			options.push({title: prop, value: prop})
-		}
-
-		this.setState({
-			report: years,
-			options: options
-		})
-	}
-
 	render() {
 		const {
-			report,
-			year,
-			options
+			year
 		} = this.state
 
 		return (
@@ -57,12 +40,14 @@ class Report extends Component {
 				<div className={'limit-grid'}>
 					<Title text={'Annual Report'} />
 
-					<ReportList
-						report={report}
-						options={options}
-						year={year}
-						setValue={this.setValue}
-					/>
+					{this.props.years && this.props.options &&
+						<ReportList
+							years={this.props.years}
+							options={this.props.options}
+							year={year}
+							setValue={this.setValue}
+						/>
+					}
 				</div>
 
 				<Navbar current={'report'} />
@@ -71,4 +56,14 @@ class Report extends Component {
 	}
 }
 
-export default Report
+export default connect(
+	state => ({
+		years: state.book.years,
+		options: state.book.options
+	}),
+	dispatch => ({
+		onLoadReport: () => {
+			dispatch(Creators.loadReport())
+		}
+	})
+)(Report)

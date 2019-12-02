@@ -5,7 +5,7 @@ import './style.scss'
 
 const ReportList = (props) => {
 	const {
-		report,
+		years,
 		options,
 		year,
 		setValue
@@ -15,8 +15,8 @@ const ReportList = (props) => {
 
 	let total = 0
 
-	if(report && year in report) { 
-		report[year].forEach((month) => {
+	if(years && year in years) { 
+		years[year].forEach((month) => {
 			total+= month.length
 		})
 	}
@@ -38,15 +38,19 @@ const ReportList = (props) => {
 
 			<h3 className={'report-list__year'}>Readed books in {year}: <b>{total}</b></h3>
 
-			{report && year in report && total &&
-				report[year].map((month, index) =>
+			{years && year in years && total &&
+				years[year].map((month, index) =>
 					<div className={'report-list__item'} key={index}>
 						<p className={'report-list__title'}>{months[index]}</p>
-						<ul>
-							{month.map((book, i) =>
-								<li className={'report-list__books'} key={i}>{book.title}</li>
-							)}
-						</ul>
+						{month.length ?
+							<ul>
+								{month.map((book, i) =>
+									<li className={'report-list__books'} key={i}>{book.title}</li>
+								)}
+							</ul>
+							:
+							<p className={'report-list__text'}>No books</p>
+						}
 					</div>
 				)
 			}

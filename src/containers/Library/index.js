@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-
 import { connect } from 'react-redux'
 import { Creators } from '../../store/ducks/book'
 
@@ -30,17 +29,6 @@ class Library extends Component {
 	setValue(name, value) {
 		this.setState({[name]: value})
 	}
-
-	/*getBooks = async() => {
-		let books = localStorage.getItem('books'),
-			items = books ? JSON.parse(books) : []
-
-		if(items.length) {
-			items.sort(function(a,b) {return (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0)})
-		}
-
-		this.setState({books: items})
-	}*/
 
 	handleSearch = async(event) => {
 		event.preventDefault()

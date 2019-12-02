@@ -94,7 +94,7 @@ export const { Types, Creators } = createActions({
 				items.sort(function(a,b) {return (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0)})
 			}
 
-			if ( Object.keys(items).length !== 0) {
+			if (items) {
 				dispatch(Creators.loadBooksSuccess(items))
 				dispatch(Creators.loadingBooks(false))
 			} else {
@@ -187,7 +187,37 @@ export const { Types, Creators } = createActions({
 		return {
 			type: 'SAVE_BOOK_TO_REPORT'
 		}
-	}
+	},
+	loadReport: () => async dispatch => {
+		try {
+			dispatch(Creators.loadingReport(true))
+
+			let report = localStorage.getItem('report'),
+				years = report ? JSON.parse(report) : {},
+				options = []
+
+			for (let prop in years) {
+				options.push({title: prop, value: prop})
+			}
+
+			if (years) {
+				dispatch(Creators.loadReportSuccess({years: years, options: options}))
+				dispatch(Creators.loadingReport(false))
+			} else {
+				dispatch(Creators.loadReportFailure('Sorry, an unexpected error has occurred!'))
+				dispatch(Creators.loadingReport(false))
+			}
+		} catch (error) {
+			dispatch(Creators.loadReportFailure('Sorry, an unexpected error has occurred!'))
+		}
+
+		return {
+			type: 'LOAD_REPORT',
+		}
+	},
+	loadReportSuccess: ['report'],
+	loadReportFailure: ['error'],
+	loadingReport: ['active']
 })
 
 const INITIAL_STATE = {
@@ -256,7 +286,7 @@ const loadBooksError = (state = INITIAL_STATE, action) => {
 const loadingBooks = (state = INITIAL_STATE, action) => {
 	return {
 		...state,
-		loadingBook: action.active
+		loadingBooks: action.active
 	}
 }
 
@@ -314,6 +344,32 @@ const saveBookToReport = (state = INITIAL_STATE, action) => {
 	return INITIAL_STATE
 }
 
+const loadReport = (state = INITIAL_STATE, action) => {
+	return INITIAL_STATE
+}
+
+const loadReportSuccess = (state = INITIAL_STATE, action) => {
+	return {
+		...state,
+		years: action.report.years,
+		options: action.report.options
+	}
+}
+
+const loadReportError = (state = INITIAL_STATE, action) => {
+	return {
+		...state,
+		error: action.error
+	}
+}
+
+const loadingReport = (state = INITIAL_STATE, action) => {
+	return {
+		...state,
+		loadingReport: action.active
+	}
+}
+
 export default createReducer(INITIAL_STATE, {
 	[Types.ADD_BOOK]: addBook,
 	[Types.LOAD_BOOK]: loadBook,
@@ -331,5 +387,9 @@ export default createReducer(INITIAL_STATE, {
 	[Types.LOADING_SEARCH_BOOKS]: loadingSearchBooks,
 	[Types.CHANGE_QUANTITY_PER_PAGE]: changeQuantityPerPage,
 	[Types.CHECK_SEARCH_SUBMISSION]: checkSearchSubmission,
-	[Types.SAVE_BOOK_TO_REPORT]: saveBookToReport
+	[Types.SAVE_BOOK_TO_REPORT]: saveBookToReport,
+	[Types.LOAD_REPORT]: loadReport,
+	[Types.LOAD_REPORT_SUCCESS]: loadReportSuccess,
+	[Types.LOAD_REPORT_FAILURE]: loadReportError,
+	[Types.LOADING_REPORT]: loadingReport
 })
