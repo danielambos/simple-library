@@ -39,8 +39,8 @@ class Details extends Component {
 			title: 'Enter the date that you read the book',
 			html: `<input id="readDate" value="${today}" type="date" style="margin: 20px 0; padding: 10px; border: #949292 1px solid; color: 949292;" />`,
 			showCancelButton: true,
-		    onOpen: function () {
-			    document.getElementById('readDate').focus()
+			onOpen: function () {
+				document.getElementById('readDate').focus()
 			},
 			preConfirm: function () {
 				let value = document.getElementById('readDate').value
@@ -171,12 +171,12 @@ class Details extends Component {
 }
 
 export default connect(
-    state => ({
+	state => ({
 		book: state.book.book,
 		read: state.book.read
-    }),
-    dispatch => ({
-        onLoadBook: (id) => {
+	}),
+	dispatch => ({
+		onLoadBook: (id) => {
 			dispatch(Creators.loadBook(id))
 		},
 		onMarkAsRead: () => {
@@ -185,5 +185,5 @@ export default connect(
 		onSaveBookToReport: (date) => {
 			dispatch(Creators.saveBookToReport(date))
 		}
-    })
+	})
 )(Details)

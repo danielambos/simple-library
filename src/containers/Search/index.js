@@ -104,7 +104,7 @@ class Search extends Component {
 								/>
 							}
 							rightIcon={
-	                            <Button
+								<Button
 									title={
 										<svg className={'search__button-icon'}>
 											<use xlinkHref={`${findIcon}#find`} />
@@ -114,7 +114,7 @@ class Search extends Component {
 									containerStyle={{width: 'auto', padding: 0}}
 									buttonStyle={{height: 'auto', background: 'none', WebkitBoxShadow: 'none', boxShadow: 'none'}}
 								/>
-	                        }
+							}
 						/>
 					</form>
 
@@ -163,8 +163,8 @@ class Search extends Component {
 }
 
 export default connect(
-    state => ({
-        book: state.book.book,
+	state => ({
+		book: state.book.book,
 		books: state.book.books,
 		loadingBook: state.book.loadingBook,
 		loadingSearchBooks: state.book.loadingSearchBooks,
@@ -175,9 +175,9 @@ export default connect(
 		qt: state.book.qt,
 		checkSearchSubmission: state.book.checkSearchSubmission,
 		error: state.book.error
-    }),
-    dispatch => ({
-        onSearchBook: (type, filter, page) => {
+	}),
+	dispatch => ({
+		onSearchBook: (type, filter, page) => {
 			dispatch(Creators.searchBooks(type, filter, page))
 		},
 		onAddBook: (book) => {
@@ -189,5 +189,5 @@ export default connect(
 		onCheckSearchSubmission: (state) => {
 			dispatch(Creators.checkSearchSubmission(state))
 		}
-    })
+	})
 )(Search)

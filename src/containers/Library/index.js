@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 
+import { connect } from 'react-redux'
+import { Creators } from '../../store/ducks/book'
+
 import BookList from '../../components/BookList'
 import Header from '../../components/Header'
 import Navbar from '../../components/Navbar'
@@ -18,18 +21,17 @@ class Library extends Component {
 		}
 
 		this.setValue = this.setValue.bind(this)
-		this.getBooks = this.getBooks.bind(this)
 	}
 
 	componentDidMount() {
-		this.getBooks()
+		this.props.onLoadBooks()
 	}
 
 	setValue(name, value) {
 		this.setState({[name]: value})
 	}
 
-	getBooks = async() => {
+	/*getBooks = async() => {
 		let books = localStorage.getItem('books'),
 			items = books ? JSON.parse(books) : []
 
@@ -38,17 +40,16 @@ class Library extends Component {
 		}
 
 		this.setState({books: items})
-	}
+	}*/
 
 	handleSearch = async(event) => {
 		event.preventDefault()
 
 		let {
-			books,
 			filter
 		} = this.state
 
-		let result = books.filter(x => x.title.toLowerCase().indexOf(filter.toLowerCase()) > -1)
+		let result = this.props.books.filter(x => x.title.toLowerCase().indexOf(filter.toLowerCase()) > -1)
 
 		this.setState({
 			filtered: result
@@ -64,7 +65,6 @@ class Library extends Component {
 
 	render() {
 		const {
-			books,
 			filter,
 			filtered
 		} = this.state
@@ -77,7 +77,7 @@ class Library extends Component {
 					<Title text={'My Library'} />
 
 					<BookList
-						books={filtered || books}
+						books={filtered || this.props.books}
 						filter={filter}
 						filtered={filtered}
 						setValue={this.setValue}
@@ -92,4 +92,13 @@ class Library extends Component {
 	}
 }
 
-export default Library
+export default connect(
+	state => ({
+		books: state.book.books
+	}),
+	dispatch => ({
+		onLoadBooks: () => {
+			dispatch(Creators.loadBooks())
+		}
+	})
+)(Library)
