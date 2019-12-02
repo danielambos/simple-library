@@ -22,7 +22,7 @@
     "lint": "eslint src/*.js src/**/*.js ; stylelint --syntax=scss src/**/*.scss",
     "test": "react-scripts test",
     "test:e2e": "yarn test:e2e:start & yarn test:e2e:run",
-    "test:e2e:start": "PORT=3001 REACT_APP_E2E=cypress NODE_PATH=src react-scripts start",
+    "test:e2e:start": "PORT=3000 REACT_APP_E2E=cypress NODE_PATH=src react-scripts start",
     "test:e2e:run": "cypress run",
     "test:e2e:open": "cypress open",
     "test:e2e:verify": "cypress verify",
@@ -53,7 +53,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint"
+      "pre-commit": "npm run lint",
+      "pre-push": "npm run test:e2e"
     }
   }
 }
