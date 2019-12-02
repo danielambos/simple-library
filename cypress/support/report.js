@@ -1,0 +1,3 @@
+Cypress.Commands.add('report', () => {
+	localStorage.setItem('report', JSON.stringify({"2019":[[],[],[],[],[],[],[],[],[],[],[],[{"id":"OL26757374M","title":"The Hobbit","cover":{"small":"https://covers.openlibrary.org/b/id/8406761-S.jpg","large":"https://covers.openlibrary.org/b/id/8406761-L.jpg","medium":"https://covers.openlibrary.org/b/id/8406761-M.jpg"},"day":"02","month":"12","year":"2019"},{"id":"OL1532643M","title":"The Lord of the Rings","cover":{"small":"https://covers.openlibrary.org/b/id/8314541-S.jpg","large":"https://covers.openlibrary.org/b/id/8314541-L.jpg","medium":"https://covers.openlibrary.org/b/id/8314541-M.jpg"},"day":"02","month":"12","year":"2019"}]]}))
+})

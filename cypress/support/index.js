@@ -15,3 +15,4 @@
 
 import './login'
 import './books'
+import './report'

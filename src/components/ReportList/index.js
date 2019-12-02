@@ -16,8 +16,8 @@ const ReportList = (props) => {
 	let total = 0
 
 	if(report && year in report) { 
-		total = report[year].map((month) => {
-			return total+month.length
+		report[year].forEach((month) => {
+			total+= month.length
 		})
 	}
 
