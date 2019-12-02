@@ -46,6 +46,39 @@ export const { Types, Creators } = createActions({
 			type: 'ADD_BOOK',
 		}
 	},
+	removeBook: (book) => async dispatch => {
+		try {
+			let books = localStorage.getItem('books'),
+				items = books ? JSON.parse(books) : []
+
+			if(items.length) {
+				let index = items.findIndex(x => x.id === book)
+
+				if(index > -1) {
+					items.splice(index, 1)
+				}
+			}
+
+			localStorage.setItem('books', JSON.stringify(items))
+
+			Swal.fire({
+				title: 'Success!',
+				text: 'You successfully removed the book.',
+				confirmButtonText: 'OK'
+			})
+
+		} catch (error) {
+			Swal.fire({
+				title: 'Error!',
+				text: 'Sorry, an unexpected error has occurred!',
+				confirmButtonText: 'OK'
+			})
+		}
+
+		return {
+			type: 'REMOVE_BOOK',
+		}
+	},
 	loadBook: (id) => async dispatch => {
 		try {
 			dispatch(Creators.loadingBook(true))
@@ -239,6 +272,10 @@ const addBook = (state = INITIAL_STATE, action) => {
 	return INITIAL_STATE
 }
 
+const removeBook = (state = INITIAL_STATE, action) => {
+	return INITIAL_STATE
+}
+
 const loadBook = (state = INITIAL_STATE, action) => {
 	return INITIAL_STATE
 }
@@ -372,6 +409,7 @@ const loadingReport = (state = INITIAL_STATE, action) => {
 
 export default createReducer(INITIAL_STATE, {
 	[Types.ADD_BOOK]: addBook,
+	[Types.REMOVE_BOOK]: removeBook,
 	[Types.LOAD_BOOK]: loadBook,
 	[Types.LOAD_BOOK_SUCCESS]: loadBookSuccess,
 	[Types.LOAD_BOOK_FAILURE]: loadBookError,

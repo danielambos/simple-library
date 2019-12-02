@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-
 import { connect } from 'react-redux'
 import { Creators } from '../../store/ducks/book'
-
 import Swal from 'sweetalert2'
 
 import Button from '../../components/Button'
@@ -21,15 +19,12 @@ class Details extends Component {
 		}
 
 		this.handleRead = this.handleRead.bind(this)
+		this.handleRemove = this.handleRemove.bind(this)
 		this.handleReport = this.handleReport.bind(this)
 	}
 
 	componentDidMount() {
-		const {
-			id
-		} = this.state
-
-		this.props.onLoadBook(id)
+		this.props.onLoadBook(this.state.id)
 	}
 
 	handleRead = async() => {
@@ -61,6 +56,22 @@ class Details extends Component {
 		}
 	}
 
+	handleRemove = async() => {
+		let confirm = await Swal.fire({
+			title: 'Are you sure?',
+			text: 'Do you really want to remove this book?',
+			confirmButtonText: 'Yes',
+			showCancelButton: true,
+			cancelButtonText: 'No'
+		})
+
+		if(confirm.value) {
+			this.props.onRemoveBook(this.state.id)
+
+			this.props.history.push('/library')
+		}
+	}
+
 	handleReport = async(date) => {
 		this.props.onSaveBookToReport(date)
 	}
@@ -80,13 +91,22 @@ class Details extends Component {
 								{this.props.read ?
 									<p className={'details__readed'}>You already marked as read this book</p>
 									:
-									<Button
-										title={'Mark as read'}
-										type={'Button'}
-										styleType={'small'}
-										buttonStyle={{width: '100%'}}
-										onClick={this.handleRead}
-									/>
+									<div>
+										<Button
+											title={'Mark as read'}
+											type={'Button'}
+											styleType={'small'}
+											buttonStyle={{width: '100%'}}
+											onClick={this.handleRead}
+										/>
+										<Button
+											title={'Remove from library'}
+											type={'Button'}
+											styleType={'small'}
+											buttonStyle={{width: '100%', background: 'var(--danger)'}}
+											onClick={this.handleRemove}
+										/>
+									</div>
 								}
 								
 							</div>
@@ -181,6 +201,9 @@ export default connect(
 		},
 		onMarkAsRead: () => {
 			dispatch(Creators.markAsRead())
+		},
+		onRemoveBook: (id) => {
+			dispatch(Creators.removeBook(id))
 		},
 		onSaveBookToReport: (date) => {
 			dispatch(Creators.saveBookToReport(date))

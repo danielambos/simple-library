@@ -23,4 +23,25 @@ describe('Search', () => {
 		// should return as readed
 		cy.get('.details').find('.details__readed').contains('You already marked as read this book')
 	})
+
+	it('should get a list of books and remove one book', () => {
+		// should return 4 items
+		cy.get('.book-list').find('li').should('have.length', 4)
+		// should open first book
+		cy.get('.book-list-item:first-child').find('a').click()
+		// should change url
+		cy.url().should('match', new RegExp('localhost:3000/book/OL26757374M$'))
+		// should return button "Remove from library"
+		cy.get('.details').find('button').contains('Remove from library')
+		// should open date field
+		cy.get('.details').find('button').contains('Remove from library').click()
+		// should return success
+		cy.get('.swal2-container').find('.swal2-confirm').should('have.length', 1)
+		// should click ok and return to list
+		cy.get('.swal2-container').find('.swal2-confirm').click()
+		// should return to library
+		cy.url().should('match', new RegExp('localhost:3000/library$'))
+		// should return 3 items
+		cy.get('.book-list').find('li').should('have.length', 3)
+	})
 })
