@@ -33,9 +33,11 @@ class Details extends Component {
 	}
 
 	handleRead = async() => {
+		let today = new Date().toISOString().slice(0,10)
+
 		let date = await Swal.fire({
 			title: 'Enter the date that you read the book',
-			html: '<input id="readDate" type="date" style="margin: 20px 0; padding: 10px; border: #949292 1px solid; color: 949292;" />',
+			html: `<input id="readDate" value="${today}" type="date" style="margin: 20px 0; padding: 10px; border: #949292 1px solid; color: 949292;" />`,
 			showCancelButton: true,
 		    onOpen: function () {
 			    document.getElementById('readDate').focus()
