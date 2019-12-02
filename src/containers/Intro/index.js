@@ -67,11 +67,13 @@ class Intro extends Component {
 						placeholder={'Name'}
 						value={name}
 						onChange={(name, value) => {this.setState({'name': value})}}
+						wrapperStyle={{WebkitBoxShadow: 'none', boxShadow: 'none'}}
 					/>
 					<Button
 						title={'Go!'}
 						type={'submit'}
 						loading={this.props.loadingRegisterUser}
+						buttonStyle={{WebkitBoxShadow: 'none', boxShadow: 'none'}}
 					/>
 				</form>
 			</div>

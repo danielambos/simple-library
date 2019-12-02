@@ -29,7 +29,9 @@ class Input extends Component {
             rightIcon,
             invalid,
             invalidMessage,
-            containerStyle
+            containerStyle,
+            wrapperStyle,
+            inputStyle
         } = this.props
 
         const required = this.props.required ? {'required': true} : null
@@ -39,7 +41,7 @@ class Input extends Component {
                 className={'input-content' + (invalid === true ? ' input-content--invalid' : '')}
                 style={containerStyle}
             >
-                <div className={'input-content__wrapper'}>
+                <div className={'input-content__wrapper'} style={wrapperStyle}>
                     {leftIcon &&
                         leftIcon
                     }
@@ -51,6 +53,7 @@ class Input extends Component {
                         placeholder={placeholder}
                         value={value}
                         onChange={this.handleInputChange}
+                        style={inputStyle}
                         {...required}
                     />
                     {rightIcon &&
